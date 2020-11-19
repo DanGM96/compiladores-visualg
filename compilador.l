@@ -104,6 +104,72 @@ interrompa
 ate
 */
 
+/*Palavras Chaves
+"abs"             { return ABS;     } 
+"arccos"          { return ARCC;    }
+"arcsen"          { return ARCS;    }
+"arctan"          { return ARCT;    }
+"algoritimo"      { return ALG;     }
+"aleatorio"       { return ALE;     }
+"arquivo"         { return ARQ;     }
+"acs"             { return ACS;     }      
+"ate"             { return ATE;     }         
+"caracter"        { return CAR;     }    
+"caso"            { return CASO;    } 
+"compr"           { return COMPR;   }
+"copia"           { return COPIA;   }
+"cos"             { return COS;     }
+"cotan"           { return COT;     }
+"cronometro"      { return CRO;     }
+"debug"           { return DEB;     }
+"declare"         { return DEC;     }      
+"eco"             { return ECO;     }         
+"enquanto"        { return ENQ;     }
+"faca"            { return FACA;    } 
+"fimalgoritimo"   { return FIMA;    }
+"fimenquanto"     { return COPIA;   }
+"fimescolha"      { return FIMES;   }
+"fimfuncao"       { return FIMFUN;  }
+"fimpara"         { return FIMPARA; }
+"fimprocedimento" { return FIMPRO;  }
+"fimrepita"       { return FIMREP;  }      
+"fimse"           { return FIMSE;   }         
+"funcao"          { return FUNCAO;  }
+"grauprad"        { return GRAU;    }
+"inicio"          { return INI;     }
+"int"             { return INT;     }
+"interrompa"      { return INTER;   }
+"leia"            { return LEAIA;   }
+"literal"         { return LITEAL;  }
+"log"             { return LOG;     }      
+"logico"          { return LOGI;    }         
+"logn"            { return LOGN;    }
+"maiusc"          { return MAIU;    }
+"mensagem"        { return MENS;    }
+"numerico"        { return NUME;    }
+"minusc"          { return MINUS;   }
+"numpcarac"       { return NUMP;    }
+"outrocaso"       { return OUTROC;  }      
+"para"            { return PARA;    }         
+"passo"           { return PASSO;   }
+"pausa"           { return PAUSA;   }
+"pi"              { return PI;      }
+"pos"             { return POS;     }
+"procedimento"    { return PRO;     }
+"quad"            { return QUAD;    }
+"radpgrau"        { return RADPG;   }
+"raizq"           { return RAIZQ;   }      
+"rand"            { return RAND;    }         
+"randi"           { return RANDI;   }
+"repita"          { return REPT;    }
+"se"              { return SE;      }
+"sen"             { return SEN;     }      
+"senao"           { return SENAO;   }         
+"timer"           { return TIMER;   }
+"tan"             { return TAN;     }
+"verdadeiro"      { return VERDA;   }
+*/
+
 [0-9]+"."[0-9]*{EXP}? |
 "."?[0-9]+{EXP}?     { yylval.d = atof(yytext); return NUM; }
 

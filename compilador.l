@@ -140,8 +140,6 @@ ID						{alpha}+{alnum}*
 "aleatorio"       { return ALE;     }
 "arquivo"         { return ARQ;     }
 "acs"             { return ACS;     }
-"ate"             { return ATE;     }
-"caso"            { return CASO;    }
 "compr"           { return COMPR;   }
 "copia"           { return COPIA;   }
 "cos"             { return COS;     }
@@ -152,7 +150,6 @@ ID						{alpha}+{alnum}*
 "eco"             { return ECO;     }
 "grauprad"        { return GRAU;    }
 "leia"            { return LEAIA;   }
-"literal"         { return LITEAL;  }
 "log"             { return LOG;     }
 "logn"            { return LOGN;    }
 "maiusc"          { return MAIU;    }

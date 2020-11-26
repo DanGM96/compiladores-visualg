@@ -132,41 +132,43 @@ ID						{alpha}+{alnum}*
 		return STRING; 
 	}
 
+ /* Funcoes aritmeticas complexas */
+"abs"             { return ABS; }
+"sen"             { return SEN; }
+"cos"             { return COS; }
+"tan"             { return TAN; }
+"arcsen"          { return ARCSEN; }
+"arccos"          { return ARCCOS; }
+"arctan"          { return ARCTAN; }
+"cotan"           { return COTAN; }
+"grauprad"        { return GRAUPRAD; }
+"radpgrau"        { return RADPGRAU; }
+"log"             { return LOG; }
+"logn"            { return LOGN; }
+"raizq"           { return RAIZQ; }
+
  /* Outras palavras reservadas */
-"abs"             { return ABS;     }
-"arccos"          { return ARCC;    }
-"arcsen"          { return ARCS;    }
-"arctan"          { return ARCT;    }
-"aleatorio"       { return ALE;     }
-"arquivo"         { return ARQ;     }
-"acs"             { return ACS;     }
-"compr"           { return COMPR;   }
-"copia"           { return COPIA;   }
-"cos"             { return COS;     }
-"cotan"           { return COT;     }
-"cronometro"      { return CRO;     }
-"debug"           { return DEB;     }
-"declare"         { return DEC;     }
-"eco"             { return ECO;     }
-"grauprad"        { return GRAU;    }
-"leia"            { return LEAIA;   }
-"log"             { return LOG;     }
-"logn"            { return LOGN;    }
-"maiusc"          { return MAIU;    }
-"mensagem"        { return MENS;    }
-"minusc"          { return MINUS;   }
-"numpcarac"       { return NUMP;    }
-"pausa"           { return PAUSA;   }
-"pi"              { return PI;      }
-"pos"             { return POS;     }
-"quad"            { return QUAD;    }
-"radpgrau"        { return RADPG;   }
-"raizq"           { return RAIZQ;   }
-"rand"            { return RAND;    }
-"randi"           { return RANDI;   }
-"sen"             { return SEN;     }
-"timer"           { return TIMER;   }
-"tan"             { return TAN;     }
+"pi"              { return PI; }
+"aleatorio"       { return ALEATORIO; }
+"arquivo"         { return ARQUIVO; }
+"asc"             { return ASCII; }
+"compr"           { return COMPR; }
+"copia"           { return COPIA; }
+"cronometro"      { return CRONOMETRO; }
+"debug"           { return DEBUG; }
+"declare"         { return DECLARE; }
+"eco"             { return ECO; }
+"leia"            { return LEIA; }
+"maiusc"          { return MAIUSC; }
+"mensagem"        { return MENSAGEM; }
+"minusc"          { return MINUSC; }
+"numpcarac"       { return NUMPCARAC; }
+"pausa"           { return PAUSA; }
+"pos"             { return POS; }
+"quad"            { return QUAD; }
+"rand"            { return RAND; }
+"randi"           { return RANDI; }
+"timer"           { return TIMER; }
 
  /* Restante */
 "//".* 			{ /* ignora os comentarios */ }

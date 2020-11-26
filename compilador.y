@@ -20,6 +20,7 @@
 %token				SE ENTAO SENAO FIMSE ESCOLHA CASO OUTROCASO FIMESCOLHA FUNC FIMFUNC PROC FIMPROC RETORNE 
 %token				PARENESQ PARENDIR VIRGULA VETOR COCHETEESQ COCHETEDIR DOISPT PARA DE ATE FACA FIMPARA
 %token				ENQUANTO FIMENQUANTO REPITA FIMREPITA INTERROMPA
+%token				ABS SEN COS TAN ARCSEN ARCCOS ARCTAN COTAN GRAUPRAD RADPGRAU LOG LOGN RAIZQ
 
 %token<symbol_name>	ID
 %token<int_val>		NUM_INT
@@ -32,6 +33,8 @@
 %right 				NAO
 /* 3 */
 %left				MUL DIV
+/* 4 */
+%left				ABS SEN COS TAN ARCSEN ARCCOS ARCTAN COTAN GRAUPRAD RADPGRAU LOG LOGN RAIZQ
 
 %nonassoc			UNARYOP
 
@@ -48,11 +51,38 @@ expressao_mult
 	| expressao_mult MUL expressao_add
 	| expressao_mult DIV expressao_add
 	;
-expressao_arit_unaria
+expressao_arit_complexa
+	: ABS expressao_arit_unaria_parentese
+	| SEN expressao_arit_unaria_parentese
+	| COS expressao_arit_unaria_parentese
+	| TAN expressao_arit_unaria_parentese
+	| ARCSEN expressao_arit_unaria_parentese
+	| ARCCOS expressao_arit_unaria_parentese
+	| ARCTAN expressao_arit_unaria_parentese
+	| COTAN expressao_arit_unaria_parentese
+	| GRAUPRAD expressao_arit_unaria_parentese
+	| RADPGRAU expressao_arit_unaria_parentese
+	| LOG expressao_arit_unaria_parentese
+	| LOGN expressao_arit_unaria_parentese
+	| RAIZQ expressao_arit_unaria_parentese
+	;
+expressao_arit_unaria_base
 	: expressao_mult
+	| expressao_arit_complexa
 	| ADD expressao_mult
 	| SUB expressao_mult
 	;
+expressao_arit_unaria_sem_parentese
+	: expressao_logica_unaria_base
+	;
+expressao_arit_unaria_parentese
+	: PARENESQ expressao_arit_unaria_base PARENDIR
+	;
+expressao_arit_unaria
+	: expressao_arit_unaria_parentese
+	| expressao_arit_unaria_sem_parentese
+	;
+
 expressao_relacional
 	: expressao_arit_unaria
 	| expressao_relacional IGUAL expressao_arit_unaria
@@ -72,7 +102,7 @@ expressao_logica_unaria
 	: expressao_logica
 	| NAO expressao_logica
 	;
-	
+
 expressao_sem_parentese
 	: expressao_logica_unaria
 	;

@@ -1,8 +1,10 @@
 %option noyywrap
 
 %{
-	#include "scanner.yy.h"
-	#include "parser.tab.h"
+	#include <stdio.h>
+	#include <stdlib.h>
+	#include <math.h>
+	#include "compilador.tab.h"
 	int lineno = 1;
 %}
 
@@ -105,6 +107,22 @@ ID						{alpha}+{alnum}*
  /* Comando interrompa */
 "interrompa"	{ return INTERROMPA; }
 
+ /* Funcoes aritmeticas complexas */
+"abs"             { return ABS; }
+"sen"             { return SEN; }
+"cos"             { return COS; }
+"tan"             { return TAN; }
+"arcsen"          { return ARCSEN; }
+"arccos"          { return ARCCOS; }
+"arctan"          { return ARCTAN; }
+"cotan"           { return COTAN; }
+"grauprad"        { return GRAUPRAD; }
+"radpgrau"        { return RADPGRAU; }
+"log"             { return LOG; }
+"logn"            { return LOGN; }
+"raizq"           { return RAIZQ; }
+"pi"              { yylval.double_val = acos(-1); return PI; }
+
  /* Valores */
 "verdadeiro"	{ 
 		yylval.int_val = 1; 
@@ -132,23 +150,8 @@ ID						{alpha}+{alnum}*
 		return STRING; 
 	}
 
- /* Funcoes aritmeticas complexas */
-"abs"             { return ABS; }
-"sen"             { return SEN; }
-"cos"             { return COS; }
-"tan"             { return TAN; }
-"arcsen"          { return ARCSEN; }
-"arccos"          { return ARCCOS; }
-"arctan"          { return ARCTAN; }
-"cotan"           { return COTAN; }
-"grauprad"        { return GRAUPRAD; }
-"radpgrau"        { return RADPGRAU; }
-"log"             { return LOG; }
-"logn"            { return LOGN; }
-"raizq"           { return RAIZQ; }
-
  /* Outras palavras reservadas */
-"pi"              { return PI; }
+ /*
 "aleatorio"       { return ALEATORIO; }
 "arquivo"         { return ARQUIVO; }
 "asc"             { return ASCII; }
@@ -169,6 +172,7 @@ ID						{alpha}+{alnum}*
 "rand"            { return RAND; }
 "randi"           { return RANDI; }
 "timer"           { return TIMER; }
+*/
 
  /* Restante */
 "//".* 			{ /* ignora os comentarios */ }

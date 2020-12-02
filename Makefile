@@ -2,14 +2,15 @@
 BKPNAME=$(date '+%Y-%m-%d')
 
 PROG=compilador
+ARQ=programa
 
 run: all
-	./${PROG}.exe
+	./${PROG}.exe ${ARQ}
 
 all: compilar
 
 compilar: clean parser scanner
-	gcc ${PROG}.yy.c ${PROG}.tab.c ${PROG}.c -o ${PROG}.exe -std=c89 -ll -ly -lc -lm -std=c89
+	gcc ${PROG}.yy.c ${PROG}.tab.c ${PROG}.c -o ${PROG}.exe -std=c89 -ll -lc -lm -std=c89
 	
 parser:
 	bison -d ${PROG}.y
@@ -22,4 +23,3 @@ clean:
 
 zip:
 	tar -czvf `(date +%y-%m-%d-%H-%M-%S)`.tar.gz Makefile ${PROG}.l ${PROG}.y ${PROG}.c ${PROG}.h
-

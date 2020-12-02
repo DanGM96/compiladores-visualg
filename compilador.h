@@ -1,9 +1,8 @@
 
-enum bifs {          /* funções pré-definidas */
-	B_sqrt = 1,      // raíz quadrada: sqrt(x)
-	B_exp,           // exponenciação: exp(x)
-	B_log,           // logaritmo:     log(x)
-	// ...
+enum bifs {          /* funções pré-definidas  */
+	B_sqrt = 1,      /* raíz quadrada: sqrt(x) */
+	B_exp,           /* exponenciação: exp(x)  */
+	B_log,           /* logaritmo:     log(x)  */
 };
 
 /* 
@@ -12,4 +11,6 @@ enum bifs {          /* funções pré-definidas */
 
 /* interface to the lexer */
 extern int yylineno;     /* variável global do lexer (scanner) */
-void yyerror(char * s, ...);
+extern char *yytext;	 /* variável global do lexer (scanner) */
+extern FILE *yyin;
+void yyerror(char *message);

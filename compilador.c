@@ -6,8 +6,8 @@
 #include <math.h>
 
 #include "compilador.h"
-
-void yyerror(char * s, ...) {
+/*
+void yyerror(char * s) {
 	va_list ap;
 	va_start(ap, s);
 
@@ -15,4 +15,4 @@ void yyerror(char * s, ...) {
 	vfprintf(stderr, s, ap);
 	fprintf(stderr, "\n" );
 }
-
+*/

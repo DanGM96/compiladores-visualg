@@ -7,7 +7,6 @@
 
 %union
 {
-	char char_val;
 	int int_val;
 	double double_val;
 	char *str_val;
@@ -15,7 +14,7 @@
 }
 
 /* token definition */
-%token				ALGORITMO INICIO VAR FIMALGORITMO INT REAL CARACTERE LOGICO PTPT EOL VERDADEIRO FALSO PASSO
+%token				ALGORITMO INICIO VAR FIMALGORITMO INT REAL CARACTERE LOGICO PTPT EOL PASSO
 %token				ADD SUB MUL DIV DIVINT MOD EXP ATRIBUICAO IGUAL MENOR MAIOR MENORIG MAIORIG DIF NAO OU E XOU
 %token				SE ENTAO SENAO FIMSE ESCOLHA CASO OUTROCASO FIMESCOLHA FUNC FIMFUNC PROC FIMPROC RETORNE 
 %token				PARENESQ PARENDIR VIRGULA VETOR COCHETEESQ COCHETEDIR DOISPT PARA DE ATE FACA FIMPARA
@@ -23,8 +22,8 @@
 %token				ABS SEN COS TAN ARCSEN ARCCOS ARCTAN COTAN GRAUPRAD RADPGRAU LOG LOGN RAIZQ
 
 %token<symbol_name>	ID
-%token<int_val>		NUM_INT
-%token<double_val>	NUM_DOUBLE
+%token<int_val>		NUM_INT VERDADEIRO FALSO
+%token<double_val>	NUM_DOUBLE PI
 %token<str_val>		STRING
 
 /* 1 */
@@ -33,10 +32,8 @@
 %right 				NAO
 /* 3 */
 %left				MUL DIV
-/* 4 */
-%left				ABS SEN COS TAN ARCSEN ARCCOS ARCTAN COTAN GRAUPRAD RADPGRAU LOG LOGN RAIZQ
 
-%nonassoc			UNARYOP
+%start expressao
 
 %%
 
@@ -73,10 +70,10 @@ expressao_arit_unaria_base
 	| SUB expressao_mult
 	;
 expressao_arit_unaria_sem_parentese
-	: expressao_logica_unaria_base
+	: expressao_arit_unaria_base
 	;
 expressao_arit_unaria_parentese
-	: PARENESQ expressao_arit_unaria_base PARENDIR
+	: PARENESQ expressao_arit_unaria PARENDIR
 	;
 expressao_arit_unaria
 	: expressao_arit_unaria_parentese
@@ -122,14 +119,25 @@ termo
 	| FALSO
 	| STRING
 	| ID
+	| PI
 	;
-	
+
 %%
 
 void yyerror(char *message) {
-	fprintf(stderr, "Syntax error at line %d ('%s')\n", lineno, yytext);
+	fprintf(stderr, "Syntax error at line %d ('%s')\n", yylineno, yytext);
 	if(message != NULL && strcmp(message, "syntax error") != 0)
 		fprintf(stderr, "%s\n", message);
-  	// exit(1);
+  	exit(1);
 }
 
+int main( int argc, char ** argv) {
+	/* Pula o argumento caso retorne algum erro */
+	if ( ! (yyin = fopen(argv[1], "r")) ){
+		perror(argv[1]);
+		return -1;
+	} else {
+		yyparse();
+	}	
+	return 0;
+}

@@ -37,6 +37,69 @@
 
 %%
 
+/* Inicio do programa */
+programa
+	: ALGORITMO programa_nome EOL programa_declaracoes INICIO EOL corpo programa_fim
+	;
+programa_nome
+	: /* vazio */
+	| STRING
+	;
+programa_declaracoes
+	: vars funcs
+	| vars
+	| funcs
+	| /* vazio */
+	;
+programa_fim
+	: FIMALGORITMO EOL
+	| FIMALGORITMO /* vazio */
+	;
+
+/* Declaracao de variaveis */
+vars
+	: VAR /* vazio */
+	| VAR EOL vars_loop
+	;
+vars_loop
+	: vars_loop declaracao_var
+	| declaracao_var
+	;	
+declaracao_var
+	: nomes_var DOISPT tipo_var EOL
+	;
+nomes_var
+	: ID VIRGULA nomes_var
+	| ID
+	;
+tipo_var
+	: VETOR COCHETEESQ tamanho_vetor COCHETEDIR DE tipo
+	| tipo
+	;	
+tipo
+	: INT
+	| REAL
+	| CARACTERE
+	| LOGICO
+	;
+tamanho_vetor
+	: tamanho_celula_vetor VIRGULA tamanho_celula_vetor /* Matriz */
+	| tamanho_celula_vetor /* Vetor */
+	;
+tamanho_celula_vetor
+	: NUM_INT PTPT NUM_INT
+	;
+	
+/* Corpo do programa */
+corpo
+	: /* vazio */
+	| corpo_items
+	;
+corpo_items
+	: corpo_items corpo_item
+	| corpo_item
+	;
+
 /* Expressoes */
 expressao_add
 	: termo

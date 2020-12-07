@@ -33,7 +33,7 @@
 /* 3 */
 %left				MUL DIV
 
-%start expressao
+%start programa
 
 %%
 
@@ -89,6 +89,46 @@ tamanho_vetor
 tamanho_celula_vetor
 	: NUM_INT PTPT NUM_INT
 	;
+    
+/* Declaracao de funcoes */
+funcs
+	: funcs declaracao_func
+	| declaracao_func
+	;
+declaracao_func
+	: FUNC ID PARENESQ func_parametros PARENDIR DOISPT tipo_var EOL func_corpo FIMFUNC EOL
+	| PROC ID PARENESQ func_parametros PARENDIR EOL func_corpo FIMPROC EOL
+	;
+func_parametros
+	: /* vazio */
+	| func_parametro VIRGULA func_parametros
+	| func_parametro
+	;
+func_parametro
+	: func_nomes_parameto DOISPT tipo_var
+	;
+func_nomes_parameto
+	: ID VIRGULA func_nomes_parameto
+	| ID
+    ;    
+func_corpo
+	: vars INICIO EOL corpo
+	| INICIO EOL corpo
+	;
+func_chamada
+	: ID PARENESQ func_chamada_parametros PARENDIR EOL
+	;
+func_chamada_parametros
+	: /* vazio */
+	| func_chamada_com_parametros
+	;
+func_chamada_com_parametros
+	: func_chamada_parametro VIRGULA func_chamada_com_parametros
+	| func_chamada_parametro
+	; 
+func_chamada_parametro
+	: expressao
+	;
 	
 /* Corpo do programa */
 corpo
@@ -98,6 +138,20 @@ corpo
 corpo_items
 	: corpo_items corpo_item
 	| corpo_item
+	;
+corpo_item
+	: loops
+	| se
+	| escolha	
+	| func_chamada
+	| atribuicao
+	| retorne
+	| interrompa
+	;
+
+/* Atribuicao */
+atribuicao
+	: ID ATRIBUICAO expressao EOL
 	;
 
 /* Expressoes */
@@ -183,6 +237,7 @@ termo
 	| STRING
 	| ID
 	| PI
+    | func_chamada
 	;
 
 %%

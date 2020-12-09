@@ -129,7 +129,80 @@ func_chamada_com_parametros
 func_chamada_parametro
 	: expressao
 	;
-	
+
+/* Loops */
+loops
+	: loop_para
+	| loop_enquanto
+	| loop_repita
+	;
+loop_para
+	: loop_para_cabeca EOL corpo FIMPARA EOL
+	;
+loop_para_cabeca
+	: PARA ID DE expressao ATE expressao FACA
+	| PARA ID DE expressao ATE expressao PASSO expressao FACA
+	;
+loop_enquanto
+	: loop_enquanto_cabeca EOL corpo FIMENQUANTO EOL
+	;
+loop_enquanto_cabeca
+	: ENQUANTO expressao FACA
+	;
+loop_repita
+	: REPITA EOL corpo loop_repita_rodape EOL
+	;
+loop_repita_rodape
+	: ATE expressao
+	;
+
+/* Se */
+se
+	: se_cabeca corpo se_senao FIMSE EOL
+	;
+se_cabeca
+	: SE expressao ENTAO EOL
+	;
+se_senao
+	: /* vazio */
+	| SENAO EOL corpo
+	;
+
+/* Escolha */
+escolha
+	: escolha_cabeca escolha_casos FIMESCOLHA EOL
+	;
+escolha_cabeca
+	: ESCOLHA expressao EOL
+	;
+escolha_casos
+	: escolha_casos escolha_caso
+	| escolha_caso
+	;
+escolha_caso
+	: escolha_caso_item
+	| escolha_caso_outro
+	;
+escolha_caso_item
+	: CASO escolha_caso_items EOL corpo
+	;
+escolha_caso_items
+	: expressao VIRGULA escolha_caso_items
+	| expressao
+	;
+escolha_caso_outro
+	: OUTROCASO EOL corpo
+	;
+
+/* Retorne */
+retorne
+	: RETORNE expressao EOL
+	| RETORNE EOL
+	;
+interrompa
+	: INTERROMPA EOL
+	;
+
 /* Corpo do programa */
 corpo
 	: /* vazio */
@@ -196,7 +269,6 @@ expressao_arit_unaria
 	: expressao_arit_unaria_parentese
 	| expressao_arit_unaria_sem_parentese
 	;
-
 expressao_relacional
 	: expressao_arit_unaria
 	| expressao_relacional IGUAL expressao_arit_unaria
@@ -216,7 +288,6 @@ expressao_logica_unaria
 	: expressao_logica
 	| NAO expressao_logica
 	;
-
 expressao_sem_parentese
 	: expressao_logica_unaria
 	;

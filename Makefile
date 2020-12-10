@@ -13,7 +13,7 @@ compilar: clean parser scanner
 	gcc ${PROG}.yy.c ${PROG}.tab.c ${PROG}.c -o ${PROG}.exe -std=c89 -ll -lc -lm -std=c89
 	
 parser:
-	bison -d ${PROG}.y
+	bison -d -v ${PROG}.y
 
 scanner:
 	flex --outfile=${PROG}.yy.c ${PROG}.l

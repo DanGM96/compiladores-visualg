@@ -1,4 +1,4 @@
-%option noyywrap
+%option noyywrap yylineno
 
 %{
 	#include <stdio.h>
@@ -20,10 +20,10 @@ ID						{alpha}+{alnum}*
 %%
 
  /* Delimitacoes */
-"algoritmo"		{ return ALGORITMO; }
-"inicio"		{ return INICIO; }
-"var"			{ return VAR; }
-"fimalgoritmo"	{ return FIMALGORITMO; }
+"algoritmo"			{ return ALGORITMO; }
+"inicio"			{ return INICIO; }
+"var"|"declare"		{ return VAR; }
+"fimalgoritmo"		{ return FIMALGORITMO; }
 
  /* Tipos de dados */
 "int"|"inteiro"						{ return INT; }
@@ -108,22 +108,39 @@ ID						{alpha}+{alnum}*
 "interrompa"	{ return INTERROMPA; }
 
  /* Funcoes aritmeticas complexas */
-"abs"             { return ABS; }
-"sen"             { return SEN; }
-"cos"             { return COS; }
-"tan"             { return TAN; }
-"arcsen"          { return ARCSEN; }
-"arccos"          { return ARCCOS; }
-"arctan"          { return ARCTAN; }
-"cotan"           { return COTAN; }
-"grauprad"        { return GRAUPRAD; }
-"radpgrau"        { return RADPGRAU; }
-"log"             { return LOG; }
-"logn"            { return LOGN; }
-"raizq"           { return RAIZQ; }
-"pi"              { yylval.double_val = acos(-1); return PI; }
+"abs"				{ return ABS; }
+"sen"				{ return SEN; }
+"cos"				{ return COS; }
+"tan"         	    { return TAN; }
+"arcsen"			{ return ARCSEN; }
+"arccos"			{ return ARCCOS; }
+"arctan"			{ return ARCTAN; }
+"cotan"				{ return COTAN; }
+"grauprad"			{ return GRAUPRAD; }
+"radpgrau"			{ return RADPGRAU; }
+"log"				{ return LOG; }
+"logn"				{ return LOGN; }
+"raizq"           	{ return RAIZQ; }
+"quad"       		{ return QUADRADO; }		/* quadrado do numero */
+
+ /* Outras funcoes */
+"rand"            		{ return RAND; }			/* random float de 0 a 1 */
+"randi"					{ return RANDI; }			/* random int de 0 a N */
+"aleatorio"				{ return ALEATORIO; }		/* random int de N a M */
+"compr"           		{ return COMPRIMENTO; }		/* string length */
+"leia"       		    { return LEIA; }			/* leia o user input */
+"escreva"				{ return ESCREVA; }
+"maiusc"     		    { return MAIUSCULO; }
+"minusc"    		    { return MINUSCULO; }
+"numpcarac"   		    { return NUMPCARAC; }		/* numero para caractere */
+"asc"             		{ return ASCII; }			/* retorna codigo ascii */
+"pos"        		    { return POSICAO; }			/* index of */
 
  /* Valores */
+"pi"            { 
+		yylval.double_val = acos(-1); 
+		return PI; 
+	}
 "verdadeiro"	{ 
 		yylval.int_val = 1; 
 		return VERDADEIRO; 
@@ -152,26 +169,14 @@ ID						{alpha}+{alnum}*
 
  /* Outras palavras reservadas */
  /*
-"aleatorio"       { return ALEATORIO; }
 "arquivo"         { return ARQUIVO; }
-"asc"             { return ASCII; }
-"compr"           { return COMPR; }
 "copia"           { return COPIA; }
 "cronometro"      { return CRONOMETRO; }
-"debug"           { return DEBUG; }
-"declare"         { return DECLARE; }
-"eco"             { return ECO; }
-"leia"            { return LEIA; }
-"maiusc"          { return MAIUSC; }
-"mensagem"        { return MENSAGEM; }
-"minusc"          { return MINUSC; }
-"numpcarac"       { return NUMPCARAC; }
-"pausa"           { return PAUSA; }
-"pos"             { return POS; }
-"quad"            { return QUAD; }
-"rand"            { return RAND; }
-"randi"           { return RANDI; }
 "timer"           { return TIMER; }
+"debug"           { return DEBUG; }
+"eco"             { return ECO; }
+"mensagem"        { return MENSAGEM; }
+"pausa"           { return PAUSA; }
 */
 
  /* Restante */

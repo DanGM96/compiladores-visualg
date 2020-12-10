@@ -1,1 +1,23 @@
-(sen(abs(-30)) <> sen(4.0E3))
+algoritmo "CLASSIFICACAO DE ATLETAS"
+var
+    nome, categoria : caractere
+    idade : inteiro
+inicio
+    escreva("Nome do Atleta = ")
+    leia (nome)
+    escreva("Idade do Atleta = ")
+    leia (idade)
+    escolha idade
+        caso 5,6,7,8,9,10
+            categoria <- "Infantil"
+        caso 11,12,13,14,15
+            categoria <- "Juvenil"
+        caso 16,17,18,19,20
+            categoria <- "Junior"
+        caso 21,22,23,24,25
+            categoria <- "Profissional"
+        outrocaso
+            categoria <- "INVALIDO"
+    fimescolha
+    escreva ("Categoria = ", categoria)
+fimalgoritmo

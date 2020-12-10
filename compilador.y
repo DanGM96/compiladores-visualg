@@ -20,6 +20,7 @@
 %token				PARENESQ PARENDIR VIRGULA VETOR COCHETEESQ COCHETEDIR DOISPT PARA DE ATE FACA FIMPARA
 %token				ENQUANTO FIMENQUANTO REPITA FIMREPITA INTERROMPA
 %token				ABS SEN COS TAN ARCSEN ARCCOS ARCTAN COTAN GRAUPRAD RADPGRAU LOG LOGN RAIZQ
+%token				QUADRADO RAND RANDI ALEATORIO COMPRIMENTO ASCII POSICAO LEIA ESCREVA MAIUSCULO MINUSCULO NUMPCARAC
 
 %token<symbol_name>	ID
 %token<int_val>		NUM_INT VERDADEIRO FALSO
@@ -39,11 +40,7 @@
 
 /* Inicio do programa */
 programa
-	: ALGORITMO programa_nome EOL programa_declaracoes INICIO EOL corpo programa_fim
-	;
-programa_nome
-	: /* vazio */
-	| STRING
+	: ALGORITMO STRING EOL programa_declaracoes INICIO EOL corpo programa_fim
 	;
 programa_declaracoes
 	: vars funcs
@@ -58,8 +55,11 @@ programa_fim
 
 /* Declaracao de variaveis */
 vars
-	: VAR /* vazio */
-	| VAR EOL vars_loop
+	: VAR EOL vars_conteudo
+	;
+vars_conteudo
+	: /* vazio */
+	| vars_loop
 	;
 vars_loop
 	: vars_loop declaracao_var
@@ -83,7 +83,7 @@ tipo
 	| LOGICO
 	;
 tamanho_vetor
-	: tamanho_celula_vetor VIRGULA tamanho_celula_vetor /* Matriz */
+	: tamanho_celula_vetor VIRGULA tamanho_vetor /* Matriz */
 	| tamanho_celula_vetor /* Vetor */
 	;
 tamanho_celula_vetor
@@ -96,8 +96,12 @@ funcs
 	| declaracao_func
 	;
 declaracao_func
-	: FUNC ID PARENESQ func_parametros PARENDIR DOISPT tipo_var EOL func_corpo FIMFUNC EOL
-	| PROC ID PARENESQ func_parametros PARENDIR EOL func_corpo FIMPROC EOL
+	: FUNC ID func_parametros_vazio DOISPT tipo_var EOL func_corpo FIMFUNC EOL
+	| PROC ID func_parametros_vazio EOL func_corpo FIMPROC EOL
+	;
+func_parametros_vazio
+	: /* vazio */
+	| PARENESQ func_parametros PARENDIR
 	;
 func_parametros
 	: /* vazio */
@@ -116,7 +120,7 @@ func_corpo
 	| INICIO EOL corpo
 	;
 func_chamada
-	: ID PARENESQ func_chamada_parametros PARENDIR EOL
+	: ID PARENESQ func_chamada_parametros PARENDIR
 	;
 func_chamada_parametros
 	: /* vazio */
@@ -137,20 +141,20 @@ loops
 	| loop_repita
 	;
 loop_para
-	: loop_para_cabeca EOL corpo FIMPARA EOL
+	: loop_para_cabeca EOL corpo FIMPARA
 	;
 loop_para_cabeca
 	: PARA ID DE expressao ATE expressao FACA
 	| PARA ID DE expressao ATE expressao PASSO expressao FACA
 	;
 loop_enquanto
-	: loop_enquanto_cabeca EOL corpo FIMENQUANTO EOL
+	: loop_enquanto_cabeca EOL corpo FIMENQUANTO
 	;
 loop_enquanto_cabeca
 	: ENQUANTO expressao FACA
 	;
 loop_repita
-	: REPITA EOL corpo loop_repita_rodape EOL
+	: REPITA EOL corpo loop_repita_rodape
 	;
 loop_repita_rodape
 	: ATE expressao
@@ -158,7 +162,7 @@ loop_repita_rodape
 
 /* Se */
 se
-	: se_cabeca corpo se_senao FIMSE EOL
+	: se_cabeca corpo se_senao FIMSE
 	;
 se_cabeca
 	: SE expressao ENTAO EOL
@@ -170,7 +174,7 @@ se_senao
 
 /* Escolha */
 escolha
-	: escolha_cabeca escolha_casos FIMESCOLHA EOL
+	: escolha_cabeca escolha_casos FIMESCOLHA
 	;
 escolha_cabeca
 	: ESCOLHA expressao EOL
@@ -196,11 +200,11 @@ escolha_caso_outro
 
 /* Retorne */
 retorne
-	: RETORNE expressao EOL
-	| RETORNE EOL
+	: RETORNE expressao
+	| RETORNE
 	;
 interrompa
-	: INTERROMPA EOL
+	: INTERROMPA
 	;
 
 /* Corpo do programa */
@@ -209,8 +213,8 @@ corpo
 	| corpo_items
 	;
 corpo_items
-	: corpo_items corpo_item
-	| corpo_item
+	: corpo_item EOL corpo_items
+	| corpo_item EOL
 	;
 corpo_item
 	: loops
@@ -220,11 +224,12 @@ corpo_item
 	| atribuicao
 	| retorne
 	| interrompa
+	| expressao_arit_complexa
 	;
 
 /* Atribuicao */
 atribuicao
-	: ID ATRIBUICAO expressao EOL
+	: ID ATRIBUICAO expressao
 	;
 
 /* Expressoes */
@@ -252,6 +257,18 @@ expressao_arit_complexa
 	| LOG expressao_arit_unaria_parentese
 	| LOGN expressao_arit_unaria_parentese
 	| RAIZQ expressao_arit_unaria_parentese
+	| QUADRADO expressao_arit_unaria_parentese
+	| RAND
+	| RANDI expressao_arit_unaria_parentese
+	| ALEATORIO expressao_arit_duo_parentese
+	| COMPRIMENTO expressao_arit_unaria_parentese
+	| LEIA expressao_arit_unaria_parentese
+	| ESCREVA PARENESQ expressao_arit_inf PARENDIR
+	| MAIUSCULO expressao_arit_unaria_parentese
+	| MINUSCULO expressao_arit_unaria_parentese
+	| NUMPCARAC expressao_arit_unaria_parentese
+	| ASCII expressao_arit_unaria_parentese
+	| POSICAO expressao_arit_duo_parentese
 	;
 expressao_arit_unaria_base
 	: expressao_mult
@@ -265,9 +282,15 @@ expressao_arit_unaria_sem_parentese
 expressao_arit_unaria_parentese
 	: PARENESQ expressao_arit_unaria PARENDIR
 	;
+expressao_arit_duo_parentese
+	: PARENESQ expressao_arit_unaria VIRGULA expressao_arit_unaria PARENDIR
+	;
+expressao_arit_inf
+	: expressao_arit_unaria
+	| expressao_arit_unaria VIRGULA expressao_arit_inf
+	;
 expressao_arit_unaria
-	: expressao_arit_unaria_parentese
-	| expressao_arit_unaria_sem_parentese
+	: expressao_arit_unaria_sem_parentese
 	;
 expressao_relacional
 	: expressao_arit_unaria

@@ -66,11 +66,11 @@ vars_loop
 	| declaracao_var
 	;	
 declaracao_var
-	: nomes_var DOISPT tipo_var EOL
+	: nomes_var DOISPT tipo_var EOL 
 	;
 nomes_var
 	: ID VIRGULA nomes_var
-	| ID
+	| ID					
 	;
 tipo_var
 	: VETOR COCHETEESQ tamanho_vetor COCHETEDIR DE tipo
@@ -324,14 +324,14 @@ expressao
 
 /* Termos */
 termo
-	: NUM_INT
-	| NUM_DOUBLE
-	| VERDADEIRO
-	| FALSO
-	| STRING
-	| ID
-	| PI
-    | func_chamada
+	: NUM_INT		{ $$ = newint ($1); }
+	| NUM_DOUBLE	{ $$ = newdouble ($1); }
+	| VERDADEIRO	{ $$ = newbool ($1); }
+	| FALSO			{ $$ = newbool ($1); }
+	| STRING		{ $$ = newstring ($1); }
+	| ID			{ $$ = newvar ($1); }
+	| PI			{ $$ = newpi ($1); }
+    | func_chamada	{ $$ = newfunc_chamada ($1); }
 	;
 
 %%

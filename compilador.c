@@ -5,7 +5,7 @@
 #include <string.h>
 #include <math.h>
 
-#include "calculadora.h"
+#include "compilador.h"
 
 /* criando a arvore */
 struct ast * newast( int nodetype, struct ast * left, struct ast * right ) {
